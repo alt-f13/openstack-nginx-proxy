@@ -1,0 +1,38 @@
+version: "3.8"
+networks:
+  nginx-proxy:
+    external:
+      name: nginx-proxy_default
+
+services:
+  openstack_proxy:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - nginx-proxy
+    ports:
+      # - 44433:443
+      - 8776:8776
+      - 9292:9292
+      - 8004:8004
+      - 9696:9696
+      - 35357:35357
+      - 8774:8774
+      - 5000:5000
+      - 8000:8000
+      - 8777:8777
+      - 9311:9311
+      - 9876:9876
+      - 8041:8041
+      - 8778:8778
+      - 8042:8042
+      - 6090:6090
+    volumes:
+      - /docker/nginx/certs/:/etc/nginx/certs
+    environment:
+      VIRTUAL_HOST: os.peerobyte.com
+      VIRTUAL_PORT: 443
+      VIRTUAL_PROTO: https
+      LETSENCRYPT_HOST: os.peerobyte.com
